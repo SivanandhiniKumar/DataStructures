@@ -2,23 +2,23 @@ package datastructures.doublestack.singlearray;
 
 /**
  * Stack implementation using Arrays
- * The array is divided into two for each stack
- * This implementation is inefficient in space usage
+ * The array is supports two stacks from both ends
+ * This implementation is efficient in space usage
  *
  */
-public class Stack 
+public class DoubleSideStack 
 {
     private int maxSize;
     private int[] stack;
     private int top;
     private int top2;
     
-    Stack(int size)
+    DoubleSideStack(int size)
     {
     	maxSize = size;
     	stack = new int[maxSize];
     	top = -1;
-    	top2 = size/2-1;
+    	top2 = maxSize;
     }
     
     boolean isOneEmpty()
@@ -32,30 +32,30 @@ public class Stack
     
     boolean isTwoEmpty()
     {
-    	return (top2 == maxSize/2-1);
+    	return (top2 == maxSize);
     }
     
-    boolean isOneFull()
+    boolean isFull()
     {
-    	if (top == maxSize/2-1)
+    	if (top == top2-1)
     	{
     		return true;
     	}
     	return false;
     }
     
-    boolean isTwoFull()
+    /*boolean isFull()
     {
-    	if (top2 == maxSize-1)
+    	if (top2 == top+1)
     	{
     		return true;
     	}
     	return false;
-    }
+    }*/
     
     void push1(int value)
     {
-    	if(isOneFull())
+    	if(isFull())
     	{
     		System.out.println("stack is full!!! cannot insert element");
     		return;
@@ -90,19 +90,19 @@ public class Stack
     
     void push2(int value)
     {
-    	if(isTwoFull())
+    	if(isFull())
     	{
     		System.out.println("stack is full!!! cannot insert element");
     		return;
     	}
-    	stack[++top2] = value;
+    	stack[--top2] = value;
     }
     
     void pop2()
     {
     	if(!isTwoEmpty())
     	{
-    		System.out.println(stack[top2--]);
+    		System.out.println(stack[top2++]);
     	}
     	else
     	{
@@ -112,7 +112,7 @@ public class Stack
     
     void display2()
     {
-    	for(int index = top2; index >=maxSize/2; index--)
+    	for(int index = top2; index < maxSize; index++)
     	{
     		System.out.println(stack[index]);
     	}
